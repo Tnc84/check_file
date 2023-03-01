@@ -11,9 +11,21 @@ public class Main {
         ArrayList<String> difArray = new ArrayList<>();
         File fileForRead = new File("src/main/java/com/tnc/readFile.txt");
         File fileForWrite = new File("src/main/java/com/tnc/writeFile.txt");
+//        deleteRowsThatStartWithCreated(readArray, files)
         readFromTheFile(readArray, fileForRead);
         writeToTheFile(writeArray, fileForWrite);
         appendToTheBaseFile(readArray, writeArray, difArray, fileForWrite);
+    }
+
+    public static String deleteRowsThatStartWithCreated(ArrayList<String> readArray, String row) {
+        if (row.startsWith("+ Created")) {
+//            readArray.remove(row);
+            readArray.remove(row);
+//            return "";
+        }else {
+            return row;
+        }
+        return " ";
     }
 
     private static void appendToTheBaseFile(ArrayList<String> readArray, ArrayList<String> writeArray, ArrayList<String> difArray, File file2) {
@@ -49,7 +61,8 @@ public class Main {
             Scanner read = new Scanner(fileForRead);
             while (read.hasNextLine()) {
                 String dataRead = read.nextLine();
-                readArray.add(dataRead);
+//                deleteRowsThatStartWithCreated(readArray, dataRead);
+                readArray.add(deleteRowsThatStartWithCreated(readArray, dataRead));
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
