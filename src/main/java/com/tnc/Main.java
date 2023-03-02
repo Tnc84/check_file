@@ -6,11 +6,13 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+//        File fileForRead = new File("src/main/java/com/tnc/readFile.txt");
+//        File fileForWrite = new File("src/main/java/com/tnc/writeFile.txt");
+        File fileForRead = new File("C:/Users/a830083/Desktop/Migration_Project/email-Gabi/Emails_24_01_2023.txt");
         ArrayList<String> readArray = new ArrayList<>();
         ArrayList<String> writeArray = new ArrayList<>();
         ArrayList<String> difArray = new ArrayList<>();
-        File fileForRead = new File("src/main/java/com/tnc/readFile.txt");
-        File fileForWrite = new File("src/main/java/com/tnc/writeFile.txt");
+        File fileForWrite = new File("C:/Users/a830083/Desktop/Migration_Project/email-Gabi/Emails_multiple_days.txt");
         readFromTheFile(readArray, fileForRead);
         writeToTheFile(writeArray, fileForWrite);
         appendToTheBaseFile(readArray, writeArray, difArray, fileForWrite);
@@ -18,7 +20,7 @@ public class Main {
 
     public static void deleteRowsThatStartWithCreated(ArrayList<String> readArray, String row) {
         ArrayList<String> toRemove = new ArrayList<>();
-        if (row.startsWith("+ Created")) {
+        if (row.startsWith("    - Creation")) {
             toRemove.add(row);
             toRemove.clear();
         } else {
