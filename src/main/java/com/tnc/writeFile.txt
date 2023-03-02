@@ -3,7 +3,4 @@ row 6
 row 7
 row 8
 row 1
-
-[t_-----.html, row , row , row , row , row , row ,  -  CCIP_US_Daily_Patch_.csv,  -  CIS_Daily_AmStatus__.csv,  -  CIS_Daily_Backup__.csv,  -  BackupJobSummaryReport-VejDirectoratetCommvault_vinfoforGCE_-----.html,  -  BackupJobSummaryReport_-----.html,  -  BackupJobSummaryReport_-----.html]
-[Ljava.lang.String;@70177ecd
-[Ljava.lang.String;@70177ecd
+row 2
