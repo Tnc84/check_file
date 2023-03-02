@@ -11,11 +11,9 @@ public class Main {
         ArrayList<String> difArray = new ArrayList<>();
         File fileForRead = new File("src/main/java/com/tnc/readFile.txt");
         File fileForWrite = new File("src/main/java/com/tnc/writeFile.txt");
-//        cleanedRows(fileForRead);
         readFromTheFile(readArray, fileForRead);
         writeToTheFile(writeArray, fileForWrite);
         appendToTheBaseFile(readArray, writeArray, difArray, fileForWrite);
-//        appendToTheBaseFile(cleanedRows(String.valueOf(readArray)), writeArray, difArray, fileForWrite);
     }
 
     private static void readFromTheFile(ArrayList<String> readArray, File fileForRead) {
@@ -24,7 +22,6 @@ public class Main {
             while (read.hasNextLine()) {
                 String dataRead = read.nextLine();
                 deleteRowsThatStartWithCreated(readArray, dataRead);
-//                cleanedRows(dataRead);
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -41,60 +38,47 @@ public class Main {
         }
     }
 
-    public static ArrayList<String> cleanedRows(String file) throws FileNotFoundException {
-//        ArrayList<String> newRows = new ArrayList<>();
-//        Scanner read = new Scanner(file);
-
-
-//        public static String removeAllDigit(String str)
-//        {
-//            return str.replaceAll("\\d", "");
+//    public static ArrayList<String> cleanedRows(String file) throws FileNotFoundException {
+////        ArrayList<String> newRows = new ArrayList<>();
+////        Scanner read = new Scanner(file);
+////        public static String removeAllDigit(String str)
+////        {
+////            return str.replaceAll("\\d", "");
+////    }
+////        while (read.hasNext()) {
+////            String fileRead = read.nextLine();
+//        char[] fileReadCharArray = file.toCharArray();
+//        ArrayList<String> numberChecker = new ArrayList<>();
+////            StringBuilder numberChecker = new StringBuilder();
+//        String stringAdd = "";
+//        for (int i = 0; i < fileReadCharArray.length; i++) {
+//            if (!Character.isDigit(fileReadCharArray[i])) {
+//                stringAdd += String.valueOf(fileReadCharArray[i]);
+//            }
+//        }
+//        numberChecker.add(stringAdd);
+////            newRows.add(String.valueOf(numberChecker));
+//        return numberChecker;
 //    }
-
-
-//        while (read.hasNext()) {
-//            String fileRead = read.nextLine();
-
-        char[] fileReadCharArray = file.toCharArray();
-        ArrayList<String> numberChecker = new ArrayList<>();
-//            StringBuilder numberChecker = new StringBuilder();
-        String stringAdd = "";
-        for (int i = 0; i < fileReadCharArray.length; i++) {
-            if (!Character.isDigit(fileReadCharArray[i])) {
-                stringAdd += String.valueOf(fileReadCharArray[i]);
-            }
-        }
-        numberChecker.add(stringAdd);
-//            newRows.add(String.valueOf(numberChecker));
-        return numberChecker;
-    }
-//        System.out.printf(String.valueOf(newRows));
-//        return newRows;
-//    }
+////        System.out.printf(String.valueOf(newRows));
+////        return newRows;
+////    }
 
 
     private static void appendToTheBaseFile(ArrayList<String> rows, ArrayList<String> writeArray, ArrayList<String> difArray, File file2) throws IOException {
-//    private static void appendToTheBaseFile(ArrayList<String> readArray, ArrayList<String> writeArray, ArrayList<String> difArray, File file2) {
         for (String file : rows) {
             FileOutputStream wr = new FileOutputStream(file2, true);
-            if (!writeArray.contains(file)) {
-                var charArr = file.toCharArray();
-                    String addString = "";
-                for (int i = 0; i < charArr.length; i++) {
-                    //                    ArrayList<String> addString = new ArrayList<>();
-
-                    if (!Character.isDigit(charArr[i])) {
-                        addString += (String.valueOf(charArr[i]));
-                    }
+            var charArr = file.toCharArray();
+            String addString = "";
+            for (char c : charArr) {
+                if (!Character.isDigit(c)) {
+                    addString += (String.valueOf(c));
                 }
-                    writeArray.add("\n" + addString);
-                    difArray.add("\n" + addString);
-                    wr.write(("\n" + addString).getBytes());
-//            if (!writeArray.contains(file) && !Character.isDigit(Integer.parseInt(file))) {
-//                if (!Character.isDigit(Integer.parseInt(file)))
-//                    var newFile = cleanedRows(files);
-            } else {
-                continue;
+            }
+            if (!writeArray.contains(file) && !writeArray.contains(addString)) {
+                writeArray.add("\n" + addString);
+                difArray.add("\n" + addString);
+                wr.write(("\n" + addString).getBytes());
             }
         }
         System.out.println(difArray);
