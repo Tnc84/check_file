@@ -77,14 +77,23 @@ public class Main {
 //    private static void appendToTheBaseFile(ArrayList<String> readArray, ArrayList<String> writeArray, ArrayList<String> difArray, File file2) {
         for (String file : rows) {
             FileOutputStream wr = new FileOutputStream(file2, true);
-            if (!writeArray.contains(file) && !Character.isDigit(Integer.parseInt(file))) {
+            if (!writeArray.contains(file)) {
+                var charArr = file.toCharArray();
+                    String addString = "";
+                for (int i = 0; i < charArr.length; i++) {
+                    //                    ArrayList<String> addString = new ArrayList<>();
+
+                    if (!Character.isDigit(charArr[i])) {
+                        addString += (String.valueOf(charArr[i]));
+                    }
+                }
+                    writeArray.add("\n" + addString);
+                    difArray.add("\n" + addString);
+                    wr.write(("\n" + addString).getBytes());
 //            if (!writeArray.contains(file) && !Character.isDigit(Integer.parseInt(file))) {
 //                if (!Character.isDigit(Integer.parseInt(file)))
 //                    var newFile = cleanedRows(files);
-                writeArray.add("\n" + file);
-                difArray.add("\n" + file);
-                wr.write(("\n" + file).getBytes());
-            }else {
+            } else {
                 continue;
             }
         }
