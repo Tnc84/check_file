@@ -5,27 +5,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-//        File fileForRead = new File("src/main/java/com/tnc/readFile.txt");
-//        File fileForWrite = new File("src/main/java/com/tnc/writeFile.txt");
-        File fileForRead = new File("C:/Users/a830083/Desktop/Migration_Project/email-Gabi/Emails_24_01_2023.txt");
+    public static void main(String[] args) throws IOException {
         ArrayList<String> readArray = new ArrayList<>();
         ArrayList<String> writeArray = new ArrayList<>();
         ArrayList<String> difArray = new ArrayList<>();
-        File fileForWrite = new File("C:/Users/a830083/Desktop/Migration_Project/email-Gabi/Emails_multiple_days.txt");
+        File fileForRead = new File("src/main/java/com/tnc/readFile.txt");
+        File fileForWrite = new File("src/main/java/com/tnc/writeFile.txt");
+//        cleanedRows(fileForRead);
         readFromTheFile(readArray, fileForRead);
         writeToTheFile(writeArray, fileForWrite);
         appendToTheBaseFile(readArray, writeArray, difArray, fileForWrite);
-    }
-
-    public static void deleteRowsThatStartWithCreated(ArrayList<String> readArray, String row) {
-        ArrayList<String> toRemove = new ArrayList<>();
-        if (row.startsWith("    - Creation")) {
-            toRemove.add(row);
-            toRemove.clear();
-        } else {
-            readArray.add(row);
-        }
+//        appendToTheBaseFile(cleanedRows(String.valueOf(readArray)), writeArray, difArray, fileForWrite);
     }
 
     private static void readFromTheFile(ArrayList<String> readArray, File fileForRead) {
@@ -34,23 +24,68 @@ public class Main {
             while (read.hasNextLine()) {
                 String dataRead = read.nextLine();
                 deleteRowsThatStartWithCreated(readArray, dataRead);
+//                cleanedRows(dataRead);
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static void appendToTheBaseFile(ArrayList<String> readArray, ArrayList<String> writeArray, ArrayList<String> difArray, File file2) {
-        for (String files : readArray) {
-            try {
-                FileOutputStream wr = new FileOutputStream(file2, true);
-                if (!writeArray.contains(files)) {
-                    writeArray.add(files);
-                    difArray.add(files);
-                    wr.write(("\n" + files).getBytes());
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+    public static void deleteRowsThatStartWithCreated(ArrayList<String> readArray, String row) {
+        ArrayList<String> toRemove = new ArrayList<>();
+        if (row.startsWith("+ Created")) {
+            toRemove.add(row);
+            toRemove.clear();
+        } else {
+            readArray.add(row);
+        }
+    }
+
+    public static ArrayList<String> cleanedRows(String file) throws FileNotFoundException {
+//        ArrayList<String> newRows = new ArrayList<>();
+//        Scanner read = new Scanner(file);
+
+
+//        public static String removeAllDigit(String str)
+//        {
+//            return str.replaceAll("\\d", "");
+//    }
+
+
+//        while (read.hasNext()) {
+//            String fileRead = read.nextLine();
+
+        char[] fileReadCharArray = file.toCharArray();
+        ArrayList<String> numberChecker = new ArrayList<>();
+//            StringBuilder numberChecker = new StringBuilder();
+        String stringAdd = "";
+        for (int i = 0; i < fileReadCharArray.length; i++) {
+            if (!Character.isDigit(fileReadCharArray[i])) {
+                stringAdd += String.valueOf(fileReadCharArray[i]);
+            }
+        }
+        numberChecker.add(stringAdd);
+//            newRows.add(String.valueOf(numberChecker));
+        return numberChecker;
+    }
+//        System.out.printf(String.valueOf(newRows));
+//        return newRows;
+//    }
+
+
+    private static void appendToTheBaseFile(ArrayList<String> rows, ArrayList<String> writeArray, ArrayList<String> difArray, File file2) throws IOException {
+//    private static void appendToTheBaseFile(ArrayList<String> readArray, ArrayList<String> writeArray, ArrayList<String> difArray, File file2) {
+        for (String file : rows) {
+            FileOutputStream wr = new FileOutputStream(file2, true);
+            if (!writeArray.contains(file) && !Character.isDigit(Integer.parseInt(file))) {
+//            if (!writeArray.contains(file) && !Character.isDigit(Integer.parseInt(file))) {
+//                if (!Character.isDigit(Integer.parseInt(file)))
+//                    var newFile = cleanedRows(files);
+                writeArray.add("\n" + file);
+                difArray.add("\n" + file);
+                wr.write(("\n" + file).getBytes());
+            }else {
+                continue;
             }
         }
         System.out.println(difArray);
