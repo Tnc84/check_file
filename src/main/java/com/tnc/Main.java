@@ -5,16 +5,45 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         ArrayList<String> readArray = new ArrayList<>();
         ArrayList<String> writeArray = new ArrayList<>();
         ArrayList<String> difArray = new ArrayList<>();
         File fileForRead = new File("src/main/java/com/tnc/readFile.txt");
         File fileForWrite = new File("src/main/java/com/tnc/writeFile.txt");
+//        cleanedRows(fileForRead);
         readFromTheFile(readArray, fileForRead);
-        writeToTheFile(writeArray, fileForWrite);
         appendToTheBaseFile(readArray, writeArray, difArray, fileForWrite);
+        writeToTheFile(difArray, fileForWrite);
     }
+
+    public static StringBuilder cleanedRows(String file) throws FileNotFoundException {
+//        ArrayList<String> newRows = new ArrayList<>();
+//        Scanner read = new Scanner(file);
+
+
+//        public static String removeAllDigit(String str)
+//        {
+//            return str.replaceAll("\\d", "");
+//    }
+
+
+//        while (read.hasNext()) {
+//            String fileRead = read.nextLine();
+
+            char[] fileReadCharArray = file.toCharArray();
+            StringBuilder numberChecker = new StringBuilder();
+            for (int i = 0; i < fileReadCharArray.length; i++) {
+                if (!Character.isDigit(fileReadCharArray[i])) {
+                    numberChecker.append(fileReadCharArray[i]);
+                }
+            }
+//            newRows.add(String.valueOf(numberChecker));
+        return numberChecker;
+        }
+//        System.out.printf(String.valueOf(newRows));
+//        return newRows;
+//    }
 
     public static void deleteRowsThatStartWithCreated(ArrayList<String> readArray, String row) {
         ArrayList<String> toRemove = new ArrayList<>();
@@ -43,8 +72,9 @@ public class Main {
             try {
                 FileOutputStream wr = new FileOutputStream(file2, true);
                 if (!writeArray.contains(files)) {
-                    writeArray.add(files);
-                    difArray.add(files);
+                    var newFile = cleanedRows(files);
+                    writeArray.add(String.valueOf(newFile));
+                    difArray.add(String.valueOf(newFile));
                     wr.write(("\n" + files).getBytes());
                 }
             } catch (IOException e) {
