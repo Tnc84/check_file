@@ -6,11 +6,12 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+        String checkVar = "Emails_update_17_02_2023";
         ArrayList<String> readArray = new ArrayList<>();
         ArrayList<String> writeArray = new ArrayList<>();
         ArrayList<String> difArray = new ArrayList<>();
-        File fileForRead = new File("src/main/java/com/tnc/readFile.txt");
-        File fileForWrite = new File("src/main/java/com/tnc/writeFile.txt");
+        File fileForRead = new File("C:/Users/a830083/Desktop/Migration_Project/email-Gabi/" + checkVar + ".txt");
+        File fileForWrite = new File("C:/Users/a830083/Desktop/Migration_Project/email-Gabi/test.txt");
         readFromTheFile(readArray, fileForRead);
         writeToTheFile(writeArray, fileForWrite);
         appendToTheBaseFile(readArray, writeArray, difArray, fileForWrite);
@@ -29,41 +30,10 @@ public class Main {
     }
 
     public static void deleteRowsThatStartWithCreated(ArrayList<String> readArray, String row) {
-        ArrayList<String> toRemove = new ArrayList<>();
-        if (row.startsWith("+ Created")) {
-            toRemove.add(row);
-            toRemove.clear();
-        } else {
+        if (!row.startsWith("    - Creation")) {
             readArray.add(row);
         }
     }
-
-//    public static ArrayList<String> cleanedRows(String file) throws FileNotFoundException {
-////        ArrayList<String> newRows = new ArrayList<>();
-////        Scanner read = new Scanner(file);
-////        public static String removeAllDigit(String str)
-////        {
-////            return str.replaceAll("\\d", "");
-////    }
-////        while (read.hasNext()) {
-////            String fileRead = read.nextLine();
-//        char[] fileReadCharArray = file.toCharArray();
-//        ArrayList<String> numberChecker = new ArrayList<>();
-////            StringBuilder numberChecker = new StringBuilder();
-//        String stringAdd = "";
-//        for (int i = 0; i < fileReadCharArray.length; i++) {
-//            if (!Character.isDigit(fileReadCharArray[i])) {
-//                stringAdd += String.valueOf(fileReadCharArray[i]);
-//            }
-//        }
-//        numberChecker.add(stringAdd);
-////            newRows.add(String.valueOf(numberChecker));
-//        return numberChecker;
-//    }
-////        System.out.printf(String.valueOf(newRows));
-////        return newRows;
-////    }
-
 
     private static void appendToTheBaseFile(ArrayList<String> rows, ArrayList<String> writeArray, ArrayList<String> difArray, File file2) throws IOException {
         for (String file : rows) {
