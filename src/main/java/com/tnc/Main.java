@@ -6,12 +6,15 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        String checkVar = "Emails_update_17_02_2023";
+        String readFile = "Emails_updates_23_03_2023";
         ArrayList<String> readArray = new ArrayList<>();
         ArrayList<String> writeArray = new ArrayList<>();
         ArrayList<String> difArray = new ArrayList<>();
-        File fileForRead = new File("C:/Users/a830083/Desktop/Migration_Project/email-Gabi/" + checkVar + ".txt");
+//        File fileForRead = new File("C:/Users/a830083/Desktop/Migration_Project/email-Gabi/" + readFile + ".txt");
+//        File fileForWrite = new File("C:/Users/a830083/Desktop/Migration_Project/email-Gabi/CheckFile.txt");
+        File fileForRead = new File("C:/Users/a830083/Desktop/Migration_Project/email-Gabi/" + readFile + ".txt");
         File fileForWrite = new File("C:/Users/a830083/Desktop/Migration_Project/email-Gabi/test.txt");
+        File difFile = new File("C:/Users/a830083/Desktop/Migration_Project/email-Gabi/difFile.txt");
         readFromTheFile(readArray, fileForRead);
         writeToTheFile(writeArray, fileForWrite);
         appendToTheBaseFile(readArray, writeArray, difArray, fileForWrite);
@@ -36,19 +39,19 @@ public class Main {
     }
 
     private static void appendToTheBaseFile(ArrayList<String> rows, ArrayList<String> writeArray, ArrayList<String> difArray, File file2) throws IOException {
-        for (String file : rows) {
-            FileOutputStream wr = new FileOutputStream(file2, true);
-            var charArr = file.toCharArray();
+        for (String word : rows) {
+            FileOutputStream writeToBaseFile = new FileOutputStream(file2, true);
+            var charArr = word.toCharArray();
             String addString = "";
             for (char c : charArr) {
                 if (!Character.isDigit(c)) {
                     addString += (String.valueOf(c));
                 }
             }
-            if (!writeArray.contains(file) && !writeArray.contains(addString)) {
+            if (!writeArray.contains(word) && !writeArray.contains(addString)) {
                 writeArray.add("\n" + addString);
                 difArray.add("\n" + addString);
-                wr.write(("\n" + addString).getBytes());
+                writeToBaseFile.write(("\n" + addString).getBytes());
             }
         }
         System.out.println(difArray);
