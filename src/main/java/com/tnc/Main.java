@@ -40,27 +40,25 @@ public class Main {
     }
 
     private static void appendToTheBaseFile(ArrayList<String> rows, ArrayList<String> writeArray, File file2, File difFile) throws IOException {
-        ArrayList<String> difArray = new ArrayList<>();
-        FileOutputStream writeToBaseFile = new FileOutputStream(file2, true);
-        FileOutputStream writeToDifFile = new FileOutputStream(difFile, true);
-        for (String word : rows) {
-            StringBuilder addString = new StringBuilder();
-            var charArr = word.toCharArray();
-            for (char c : charArr) {
-                if (!Character.isDigit(c)) {
-                    addString.append(c);
-                }
-            }
-            if (!writeArray.contains(word) && !writeArray.contains(addString.toString())) {
-                writeArray.add("\n" + addString);
-                difArray.add("\n" + addString);
-                writeToBaseFile.write(("\n" + addString).getBytes());
-                if (!difArray.contains(word)) {
-                    writeToDifFile.write(("\n" + readFile.substring(15, 23) + " *** diff to check ***" + "\n " + addString).getBytes());
+        int number = 0;
+        try (FileOutputStream writeToBaseFile = new FileOutputStream(file2, true)) {
+            try (FileOutputStream writeToDifFile = new FileOutputStream(difFile, true)) {
+                for (String word : rows) {
+                    StringBuilder addString = new StringBuilder();
+                    var charArr = word.toCharArray();
+                    for (char c : charArr) {
+                        if (!Character.isDigit(c)) {
+                            addString.append(c);
+                        }
+                    }
+                    if (!writeArray.contains(addString) && !writeArray.contains(addString.toString())) {
+                        writeArray.add("\n" + addString);
+                        writeToBaseFile.write(("\n" + addString).getBytes());
+                        writeToDifFile.write(("\n" + readFile.substring(15, 23) +  "\n " + "row number " + number++ + " " + addString +"\n").getBytes());
+                    }
                 }
             }
         }
-        System.out.println(difArray);
     }
 
     private static void writeToTheFile(ArrayList<String> writeArray, File file2) {
